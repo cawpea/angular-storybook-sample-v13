@@ -2,7 +2,7 @@ import { Story, Meta } from '@storybook/angular';
 import { ButtonComponent } from './button.component';
 
 export default {
-  title: 'button',
+  title: 'Components/button',
   component: ButtonComponent,
   argTypes: {
     label: { control: 'text' },
