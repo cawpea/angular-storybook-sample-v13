@@ -1,0 +1,45 @@
+@import "src/styles/design-tokens";
+
+.button {
+  padding: 8px 24px;
+  border: 1px solid currentColor;
+  border-radius: 24px;
+  background: $gray-100;
+  font-weight: bold;
+  transition: background-color 0.1s ease-out;
+  cursor: pointer;
+
+  &:hover {
+    background: $gray-200;
+  }
+
+  &:active {
+    background: $gray-300;
+  }
+
+  &--primary {
+    background: $blue-400;
+    color: $gray-100;
+
+    &:hover {
+      background: $blue-300;
+    }
+
+    &:active {
+      background: $blue-500;
+    }
+  }
+
+  &--secondary {
+    background: $gray-800;
+    color: $gray-100;
+
+    &:hover {
+      background: $gray-700;
+    }
+
+    &:active {
+      background: $gray-900;
+    }
+  }
+}
