@@ -130,7 +130,7 @@
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": "@import \"src/styles/design-tokens\";\n\n.button {\n  padding: 8px 24px;\n  border: 1px solid currentColor;\n  border-radius: 24px;\n  background: $gray-100;\n  font-weight: bold;\n  transition: background-color 0.1s ease-out;\n  cursor: pointer;\n\n  &:hover {\n    background: $gray-200;\n  }\n\n  &:active {\n    background: $gray-300;\n  }\n\n  &--primary {\n    background: $blue-400;\n    color: $gray-100;\n\n    &:hover {\n      background: $blue-300;\n    }\n\n    &:active {\n      background: $blue-500;\n    }\n  }\n\n  &--secondary {\n    background: $gray-800;\n    color: $gray-100;\n\n    &:hover {\n      background: $gray-700;\n    }\n\n    &:active {\n      background: $gray-900;\n    }\n  }\n}\n",
+                    "data": "@import \"src/styles/design-tokens\";\n\n.button {\n  min-width: 120px;\n  padding: 8px 24px;\n  border: 1px solid currentColor;\n  border-radius: 24px;\n  background: $gray-100;\n  font-weight: bold;\n  transition: background-color 0.1s ease-out;\n  cursor: pointer;\n\n  &:hover {\n    background: $gray-200;\n  }\n\n  &:active {\n    background: $gray-300;\n  }\n\n  &--primary {\n    background: $blue-400;\n    color: $gray-100;\n\n    &:hover {\n      background: $blue-300;\n    }\n\n    &:active {\n      background: $blue-500;\n    }\n  }\n\n  &--secondary {\n    background: $gray-800;\n    color: $gray-100;\n\n    &:hover {\n      background: $gray-700;\n    }\n\n    &:active {\n      background: $gray-900;\n    }\n  }\n}\n",
                     "styleUrl": "./button.component.scss"
                 }
             ],
