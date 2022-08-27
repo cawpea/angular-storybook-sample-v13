@@ -1,0 +1,202 @@
+<div>
+  <section>
+    <h2>Interpolation</h2>
+    <p>Hi! My name is {{ member?.name }}.</p>
+  </section>
+  <section>
+    <h2>プロパティバインディング</h2>
+    <img [src]="imageUrl" />
+    <div [innerHTML]="htmlText"></div>
+    <div [innerHTML]="safeHtmlText"></div>
+  </section>
+  <section>
+    <h2>イベントバインディング</h2>
+    <button (click)="onClick($event)" [class.isTextRed]="isTextRed">
+      Change Color
+    </button>
+    <input
+      #txt
+      type="text"
+      (input)="onInput(txt.value)"
+      (keyup.enter)="onEnter(txt.value)"
+    />
+    <p>
+      Value: <span>{{ txt.value }}</span>
+    </p>
+  </section>
+  <section>
+    <h2>双方向バインディング</h2>
+    <input type="text" [(ngModel)]="myName" />
+    <p>Value: {{ myName }}</p>
+    <input
+      type="text"
+      [ngModel]="myName"
+      (ngModelChange)="myName = $event.toUpperCase()"
+    />
+  </section>
+  <section>
+    <h2>パイプ</h2>
+    <section>
+      <h3>case</h3>
+      <p>
+        元の文字列： <span>{{ title }}</span>
+      </p>
+      <p>
+        uppercase: <span>{{ title | uppercase }}</span>
+      </p>
+      <p>
+        lowercase: <span>{{ title | lowercase }}</span>
+      </p>
+      <p>
+        titlecase: <span>{{ title | titlecase }}</span>
+      </p>
+    </section>
+    <section>
+      <h3>json</h3>
+      <pre>{{ member | json }}</pre>
+    </section>
+    <section>
+      <h3>slice</h3>
+      <p>
+        slice 3: <span>{{ title | slice: 3 }}</span
+        ><br />
+        slice -3:-1 <span>{{ title | slice: -3:-1 }}</span
+        ><br />
+        slice from array <span>{{ arr | slice: 2 }}</span>
+      </p>
+    </section>
+    <section>
+      <h3>number</h3>
+      <p>{{ num | number: "1.1-2" }}</p>
+    </section>
+    <section>
+      <h3>date</h3>
+      <ul>
+        <li>デフォルト: {{ now | date }}</li>
+        <li>medium: {{ now | date: "medium" }}</li>
+        <li>書式設定: {{ now | date: "y MM dd (EEE)" }}</li>
+      </ul>
+    </section>
+  </section>
+  <section>
+    <h2>属性バインディング</h2>
+    <section>
+      <h3>ngStyle</h3>
+      <label>
+        <input type="checkbox" [(ngModel)]="isStyleOn" />
+        <span [ngStyle]="getStyle()">Change Style</span>
+      </label>
+    </section>
+    <section>
+      <h3>ngClass</h3>
+      <button type="button" (click)="isStyleOn = !isStyleOn">
+        Toggle Style
+      </button>
+      <p class="toggle-text" [ngClass]="{ on: isStyleOn }">Hello!</p>
+    </section>
+  </section>
+  <section>
+    <h2>構造バインディング</h2>
+    <section>
+      <h3>ngIf</h3>
+      <form>
+        <label for="show">表示/非表示</label>
+        <input id="show" name="show" type="checkbox" [(ngModel)]="isShow" />
+      </form>
+      <div *ngIf="isShow; else elseContent">
+        <p>Hello!</p>
+      </div>
+      <ng-template #elseContent>
+        <p>非表示中</p>
+      </ng-template>
+    </section>
+    <section>
+      <h3>ngSwitch</h3>
+      <form>
+        <select name="season" [(ngModel)]="season">
+          <option value="">四季を選択</option>
+          <option value="spring">春</option>
+          <option value="summer">夏</option>
+        </select>
+      </form>
+      <div [ngSwitch]="season">
+        <p *ngSwitchCase="'spring'">春はあけぼの</p>
+        <p *ngSwitchCase="'summer'">夏は夜</p>
+      </div>
+    </section>
+    <section>
+      <h4>ngFor</h4>
+      <section>
+        <h5>Normal</h5>
+        <table>
+          <tr>
+            <th>No</th>
+            <th>名前</th>
+            <th>価格</th>
+          </tr>
+          <tr *ngFor="let book of books; index as i; trackBy: trackFn">
+            <td>{{ i + 1 }}</td>
+            <td>{{ book.name }}</td>
+            <td>{{ book.price }}</td>
+          </tr>
+        </table>
+      </section>
+      <section>
+        <h5>Pagination</h5>
+        <table>
+          <tr>
+            <th>No</th>
+            <th>名前</th>
+            <th>価格</th>
+          </tr>
+          <tr
+            *ngFor="
+              let book of books | slice: pageStart:pageStart + pageLength;
+              index as i
+            "
+          >
+            <td>{{ i + 1 }}</td>
+            <td>{{ book.name }}</td>
+            <td>{{ book.price }}</td>
+          </tr>
+        </table>
+        <ul>
+          <li *ngFor="let page of pageNumbers; index as i" (click)="pager(i)">
+            {{ i + 1 }}
+          </li>
+        </ul>
+      </section>
+    </section>
+    <section>
+      <h3>ngTemplateOutlet</h3>
+      <ng-template #myTemplate let-name="name" let-price="price">
+        <ul>
+          <li>{{ name }}</li>
+          <li>{{ price }}</li>
+        </ul>
+      </ng-template>
+
+      <select name="selectedBook" [(ngModel)]="selectedBookIndex">
+        <option *ngFor="let book of books; index as i" [value]="i">
+          {{ book.name }}
+        </option>
+      </select>
+
+      <ng-container
+        *ngTemplateOutlet="myTemplate; context: books[selectedBookIndex]"
+      ></ng-container>
+    </section>
+    <section>
+      <h3>ngComponentOutlet</h3>
+      <button
+        type="button"
+        (click)="selectedComponentIndex = selectedComponentIndex === 0 ? 1 : 0"
+      >
+        Switch Component
+      </button>
+      <ng-container
+        *ngComponentOutlet="components[selectedComponentIndex]"
+      ></ng-container>
+    </section>
+  </section>
+</div>
