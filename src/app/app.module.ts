@@ -8,6 +8,7 @@ import { TestComponent } from './test/test.component';
 
 import { EventComponent } from './test/components/event.component';
 import { BookComponent } from './test/components/book.component';
+import { FormComponent } from './form/form.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { BookComponent } from './test/components/book.component';
     TestComponent,
     EventComponent,
     BookComponent,
+    FormComponent,
   ],
   entryComponents: [EventComponent, BookComponent],
   imports: [BrowserModule, FormsModule],
