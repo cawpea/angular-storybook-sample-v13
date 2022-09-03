@@ -1,0 +1,28 @@
+<form #editBookForm="ngForm" (ngSubmit)="submit()">
+  <div>
+    <label for="id">ID：</label>
+    <input id="id" name="id" type="number" [(ngModel)]="editedBook.id" />
+  </div>
+  <div>
+    <label for="title">書名：</label>
+    <input
+      id="title"
+      name="title"
+      size="25"
+      type="text"
+      [(ngModel)]="editedBook.title"
+    />
+  </div>
+  <div>
+    <label for="price">価格：</label>
+    <input
+      id="price"
+      name="price"
+      type="number"
+      [(ngModel)]="editedBook.price"
+    />
+  </div>
+  <div>
+    <input type="submit" value="編集" />
+  </div>
+</form>

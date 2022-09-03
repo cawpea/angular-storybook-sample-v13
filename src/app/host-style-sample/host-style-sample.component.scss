@@ -1,0 +1,18 @@
+:host {
+  display: block;
+  padding: 20px;
+  border: 1px solid tomato;
+}
+
+:host-context(.custom-components) {
+  p {
+    font-weight: bold;
+    color: blue;
+  }
+}
+
+:host ::ng-deep p {
+  padding: 8px;
+  border-radius: 4px;
+  background: lightyellow;
+}

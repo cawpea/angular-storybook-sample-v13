@@ -1,140 +1,143 @@
 <section>
-  <h2>入力フォーム</h2>
-  <form #sampleForm="ngForm" (ngSubmit)="submit()" novalidate>
-    <div>
-      <label for="mail">メールアドレス：</label><br />
-      <input
+  <h2>テンプレート駆動型フォーム</h2>
+  <section>
+    <h3>入力フォーム</h3>
+    <form #sampleForm="ngForm" (ngSubmit)="submit()" novalidate>
+      <div>
+        <label for="mail">メールアドレス：</label><br />
+        <input
+          id="mail"
+          name="mail"
+          type="email"
+          [(ngModel)]="user.mail"
+          #mail="ngModel"
+          required
+          email
+        />
+        <p *ngIf="mail.hasError('required') && mail.dirty">
+          メールアドレスは必須です。
+        </p>
+        <p *ngIf="mail.hasError('email') && mail.dirty">
+          メールアドレスの形式で入力してください。
+        </p>
+      </div>
+      <div>
+        <label for="passwd">パスワード：</label><br />
+        <input
+          id="passwd"
+          name="passwd"
+          type="password"
+          [(ngModel)]="user.passwd"
+          #passwd="ngModel"
+          required
+          minlength="4"
+        />
+        <p *ngIf="passwd.hasError('required') && passwd.dirty">
+          パスワードは必須です。
+        </p>
+        <p *ngIf="passwd.hasError('minlength') && passwd.dirty">
+          パスワードは4文字以上で入力してください
+        </p>
+      </div>
+      <div>
+        <input type="submit" value="送信" [disabled]="sampleForm.invalid" />
+      </div>
+    </form>
+  </section>
+  <section>
+    <h3>ラジオボタン</h3>
+    <form #radioButtons="ngForm">
+      <ng-container *ngFor="let animal of animalsForRadio; index as i">
+        <label>
+          <input
+            type="radio"
+            name="animal"
+            [(ngModel)]="selectedAnimalIndex"
+            [value]="animal.value"
+            [checked]="selectedAnimalIndex == animal.value"
+            (change)="changeRadio(i)"
+          />
+          {{ animal.label }}
+        </label>
+      </ng-container>
+    </form>
+  </section>
+  <section>
+    <h3>チェックボックス</h3>
+    <form #checkboxes="ngForm">
+      <ng-container *ngFor="let animal of animalsForCheckbox">
+        <label>
+          <input
+            type="checkbox"
+            name="animalForCheckbox"
+            [(ngModel)]="animal.value"
+            [value]="animal.value"
+            (change)="changeCheckbox()"
+          />
+          {{ animal.label }}
+        </label>
+      </ng-container>
+    </form>
+  </section>
+  <section>
+    <h3>選択ボックス</h3>
+    <form #select="ngForm">
+      <select
+        name="animalForSelect"
+        [(ngModel)]="selectedAnimalIndexForSelect"
+        (change)="changeSelect()"
+      >
+        <option value="-1">ペットを選択してください</option>
+        <option
+          *ngFor="let animal of animalsForSelect"
+          [value]="animal.value"
+          [selected]="animal.value == selectedAnimalIndexForSelect"
+        >
+          {{ animal.label }}
+        </option>
+      </select>
+    </form>
+  </section>
+  <section>
+    <h3>文字数カウント</h3>
+    <form>
+      <textarea
+        cols="70"
+        rows="5"
+        name="tweet"
+        [(ngModel)]="tweet"
+        (input)="changeTweet()"
+      ></textarea>
+      <p class="count" [ngClass]="tweetState">{{ maxTweet - tweet.length }}</p>
+    </form>
+  </section>
+  <section>
+    <h3>テキストボックス／文字列分割</h3>
+    <form>
+      <label>メールアドレス：</label>
+      <textarea
         id="mail"
         name="mail"
-        type="email"
-        [(ngModel)]="user.mail"
-        #mail="ngModel"
-        required
-        email
-      />
-      <p *ngIf="mail.hasError('required') && mail.dirty">
-        メールアドレスは必須です。
-      </p>
-      <p *ngIf="mail.hasError('email') && mail.dirty">
-        メールアドレスの形式で入力してください。
-      </p>
-    </div>
-    <div>
-      <label for="passwd">パスワード：</label><br />
+        type="text"
+        [ngModel]="emails.join(';')"
+        (ngModelChange)="emails = $event.split(';')"
+      ></textarea>
+    </form>
+    <ul>
+      <li *ngFor="let email of emails">{{ email }}</li>
+    </ul>
+  </section>
+  <section>
+    <h3>ファイルアップロード</h3>
+    <form>
       <input
-        id="passwd"
-        name="passwd"
-        type="password"
-        [(ngModel)]="user.passwd"
-        #passwd="ngModel"
-        required
-        minlength="4"
+        id="upfile"
+        name="upfile"
+        type="file"
+        accept="image/*"
+        (change)="uploadFile(file.files)"
+        #file
       />
-      <p *ngIf="passwd.hasError('required') && passwd.dirty">
-        パスワードは必須です。
-      </p>
-      <p *ngIf="passwd.hasError('minlength') && passwd.dirty">
-        パスワードは4文字以上で入力してください
-      </p>
-    </div>
-    <div>
-      <input type="submit" value="送信" [disabled]="sampleForm.invalid" />
-    </div>
-  </form>
-</section>
-<section>
-  <h2>ラジオボタン</h2>
-  <form #radioButtons="ngForm">
-    <ng-container *ngFor="let animal of animalsForRadio; index as i">
-      <label>
-        <input
-          type="radio"
-          name="animal"
-          [(ngModel)]="selectedAnimalIndex"
-          [value]="animal.value"
-          [checked]="selectedAnimalIndex == animal.value"
-          (change)="changeRadio(i)"
-        />
-        {{ animal.label }}
-      </label>
-    </ng-container>
-  </form>
-</section>
-<section>
-  <h2>チェックボックス</h2>
-  <form #checkboxes="ngForm">
-    <ng-container *ngFor="let animal of animalsForCheckbox">
-      <label>
-        <input
-          type="checkbox"
-          name="animalForCheckbox"
-          [(ngModel)]="animal.value"
-          [value]="animal.value"
-          (change)="changeCheckbox()"
-        />
-        {{ animal.label }}
-      </label>
-    </ng-container>
-  </form>
-</section>
-<section>
-  <h2>選択ボックス</h2>
-  <form #select="ngForm">
-    <select
-      name="animalForSelect"
-      [(ngModel)]="selectedAnimalIndexForSelect"
-      (change)="changeSelect()"
-    >
-      <option value="-1">ペットを選択してください</option>
-      <option
-        *ngFor="let animal of animalsForSelect"
-        [value]="animal.value"
-        [selected]="animal.value == selectedAnimalIndexForSelect"
-      >
-        {{ animal.label }}
-      </option>
-    </select>
-  </form>
-</section>
-<section>
-  <h2>文字数カウント</h2>
-  <form>
-    <textarea
-      cols="70"
-      rows="5"
-      name="tweet"
-      [(ngModel)]="tweet"
-      (input)="changeTweet()"
-    ></textarea>
-    <p class="count" [ngClass]="tweetState">{{ maxTweet - tweet.length }}</p>
-  </form>
-</section>
-<section>
-  <h2>テキストボックス／文字列分割</h2>
-  <form>
-    <label>メールアドレス：</label>
-    <textarea
-      id="mail"
-      name="mail"
-      type="text"
-      [ngModel]="emails.join(';')"
-      (ngModelChange)="emails = $event.split(';')"
-    ></textarea>
-  </form>
-  <ul>
-    <li *ngFor="let email of emails">{{ email }}</li>
-  </ul>
-</section>
-<section>
-  <h2>ファイルアップロード</h2>
-  <form>
-    <input
-      id="upfile"
-      name="upfile"
-      type="file"
-      accept="image/*"
-      (change)="uploadFile(file.files)"
-      #file
-    />
-  </form>
+    </form>
+  </section>
 </section>

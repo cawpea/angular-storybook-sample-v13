@@ -1,0 +1,37 @@
+<section>
+  <h2>モデル駆動型フォーム</h2>
+  <section>
+    <h3>フォーム</h3>
+    <form [formGroup]="modelForm" (ngSubmit)="submit()">
+      <div>
+        <label for="modelMail">メールアドレス：</label><br />
+        <input
+          id="modelMail"
+          name="modelMail"
+          type="email"
+          [formControl]="mail"
+        />
+        <p *ngIf="mail.hasError('required')">メールアドレスは必須です。</p>
+        <p *ngIf="mail.hasError('email')">
+          メールアドレスを正しい形式で入力してください。
+        </p>
+      </div>
+      <div>
+        <label for="modelPasswd">パスワード：</label><br />
+        <input
+          id="modelPass"
+          name="modelPass"
+          type="password"
+          [formControl]="passwd"
+        />
+        <p *ngIf="passwd.hasError('required')">パスワードは必須です。</p>
+        <p *ngIf="passwd.hasError('minlength')">
+          パスワードは4文字以上で入力してください。
+        </p>
+      </div>
+      <div>
+        <input type="submit" value="Submit" [disabled]="modelForm.invalid" />
+      </div>
+    </form>
+  </section>
+</section>

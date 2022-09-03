@@ -1,0 +1,28 @@
+<div>
+  <section>
+    <h3>Select Book</h3>
+    <ul>
+      <li *ngFor="let book of books">
+        <a href="#" (click)="showBook(book)">{{ book.title }}</a>
+      </li>
+    </ul>
+    <hr />
+    <app-book-detail
+      *ngIf="selectedBook"
+      [book]="selectedBook"
+    ></app-book-detail>
+  </section>
+  <section>
+    <h3>Edit Book</h3>
+    <ul *ngIf="editedBook">
+      <li>{{ editedBook.id }}</li>
+      <li>{{ editedBook.title }}</li>
+      <li>{{ editedBook.price }}</li>
+    </ul>
+    <app-edit-book
+      *ngIf="selectedBook"
+      [book]="selectedBook"
+      (edited)="editBook($event)"
+    ></app-edit-book>
+  </section>
+</div>
